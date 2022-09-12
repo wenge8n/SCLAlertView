@@ -9,9 +9,9 @@
 #import "SCLButton.h"
 #import "SCLTimerDisplay.h"
 
-#define MARGIN_BUTTON 12.0f
+#define MARGIN_BUTTON 0.0f
 #define DEFAULT_WINDOW_WIDTH 240
-#define MIN_HEIGHT 35.0f
+#define MIN_HEIGHT 50.0f
 
 @implementation SCLButton
 
