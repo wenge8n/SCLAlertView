@@ -328,26 +328,23 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 - (void)addTimerToButtonIndex:(NSInteger)buttonIndex reverse:(BOOL)reverse;
 
-/** Set Title font family and size
+/** Set Title font
  *
- * @param titleFontFamily The family name used to displayed the title.
- * @param size Font size.
+ * Set title font
  */
-- (void)setTitleFontFamily:(NSString *)titleFontFamily withSize:(CGFloat)size;
+- (void)setTitleFont:(UIFont *)titleFont;
 
-/** Set Text field font family and size
+/** Set Text field font
  *
- * @param bodyTextFontFamily The family name used to displayed the text field.
- * @param size Font size.
+ * Set body text font
  */
-- (void)setBodyTextFontFamily:(NSString *)bodyTextFontFamily withSize:(CGFloat)size;
+- (void)setBodyTextFont:(UIFont *)bodyTextFont;
 
-/** Set Buttons font family and size
+/** Set Buttons font
  *
- * @param buttonsFontFamily The family name used to displayed the buttons.
- * @param size Font size.
+ * Set buttons font
  */
-- (void)setButtonsTextFontFamily:(NSString *)buttonsFontFamily withSize:(CGFloat)size;
+- (void)setButtonsTextFont:(UIFont *)buttonsFont;
 
 /** Add a Button with a title and a block to handle when the button is pressed.
  *
@@ -590,9 +587,9 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addCustomTextField)(UITextField *textField);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addSwitchViewWithLabelTitle)(NSString *title);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addTimerToButtonIndex)(NSInteger buttonIndex, BOOL reverse);
-@property(copy, nonatomic) SCLAlertViewBuilder *(^setTitleFontFamily)(NSString *titleFontFamily, CGFloat size);
-@property(copy, nonatomic) SCLAlertViewBuilder *(^setBodyTextFontFamily)(NSString *bodyTextFontFamily, CGFloat size);
-@property(copy, nonatomic) SCLAlertViewBuilder *(^setButtonsTextFontFamily)(NSString *buttonsFontFamily, CGFloat size);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^setTitleFont)(UIFont *titleFont);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^setBodyTextFont)(UIFont *bodyTextFont);
+@property(copy, nonatomic) SCLAlertViewBuilder *(^setButtonsTextFont)(UIFont *buttonsFont);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addButtonWithActionBlock)(NSString *title, SCLActionBlock action);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addButtonWithValidationBlock)(NSString *title, SCLValidationBlock validationBlock, SCLActionBlock action);
 @property(copy, nonatomic) SCLAlertViewBuilder *(^addButtonWithTarget)(NSString *title, id target, SEL selector);

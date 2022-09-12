@@ -38,9 +38,9 @@
 @property (strong, nonatomic) UIView *separator;
 @property (strong, nonatomic) UIImageView *backgroundView;
 @property (strong, nonatomic) UITapGestureRecognizer *gestureRecognizer;
-@property (strong, nonatomic) NSString *titleFontFamily;
-@property (strong, nonatomic) NSString *bodyTextFontFamily;
-@property (strong, nonatomic) NSString *buttonsFontFamily;
+@property (strong, nonatomic) UIFont *titleFont;
+@property (strong, nonatomic) UIFont *bodyTextFont;
+@property (strong, nonatomic) UIFont *buttonsFont;
 @property (strong, nonatomic) UIWindow *previousWindow;
 @property (strong, nonatomic) UIWindow *SCLAlertWindow;
 @property (copy, nonatomic) SCLDismissBlock dismissBlock;
@@ -54,9 +54,6 @@
 @property (assign, nonatomic) BOOL usingNewWindow;
 @property (assign, nonatomic) BOOL restoreInteractivePopGestureEnabled;
 @property (nonatomic) CGFloat backgroundOpacity;
-@property (nonatomic) CGFloat titleFontSize;
-@property (nonatomic) CGFloat bodyFontSize;
-@property (nonatomic) CGFloat buttonsFontSize;
 @property (nonatomic) CGFloat windowHeight;
 @property (nonatomic) CGFloat windowWidth;
 @property (nonatomic) CGFloat titleHeight;
@@ -175,12 +172,9 @@ SCLTimerDisplay *buttonTimer;
     self.tintTopCircle = YES;
     
     // Font
-    _titleFontFamily = @"HelveticaNeue";
-    _bodyTextFontFamily = @"HelveticaNeue";
-    _buttonsFontFamily = @"HelveticaNeue-Bold";
-    _titleFontSize = 20.0f;
-    _bodyFontSize = 14.0f;
-    _buttonsFontSize = 14.0f;
+    _titleFont = [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
+    _bodyTextFont = [UIFont systemFontOfSize:14.0f weight:UIFontWeightRegular];
+    _buttonsFont = [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
     
     // Init
     _labelTitle = [[UILabel alloc] init];
@@ -225,14 +219,14 @@ SCLTimerDisplay *buttonTimer;
     _labelTitle.numberOfLines = 2;
     _labelTitle.lineBreakMode = NSLineBreakByWordWrapping;
     _labelTitle.textAlignment = NSTextAlignmentCenter;
-    _labelTitle.font = [UIFont fontWithName:_titleFontFamily size:_titleFontSize];
+    _labelTitle.font = _titleFont;
     _labelTitle.frame = CGRectMake(0.0f, kTitleTop, _windowWidth, _titleHeight);
     
     // View text
     _viewText.editable = NO;
     _viewText.allowsEditingTextAttributes = YES;
     _viewText.textAlignment = NSTextAlignmentCenter;
-    _viewText.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
+    _viewText.font = _bodyTextFont;
     _viewText.frame = CGRectMake(16.0f, _subTitleY, _windowWidth - 32.0f, _subTitleHeight);
     _viewText.textContainerInset = UIEdgeInsetsZero;
     _viewText.textContainer.lineFragmentPadding = 0;
@@ -473,24 +467,19 @@ SCLTimerDisplay *buttonTimer;
 
 #pragma mark - Custom Fonts
 
-- (void)setTitleFontFamily:(NSString *)titleFontFamily withSize:(CGFloat)size
+- (void)setTitleFont:(UIFont *)titleFont
 {
-    self.titleFontFamily = titleFontFamily;
-    self.titleFontSize = size;
-    self.labelTitle.font = [UIFont fontWithName:_titleFontFamily size:_titleFontSize];
+    self.labelTitle.font = titleFont;
 }
 
-- (void)setBodyTextFontFamily:(NSString *)bodyTextFontFamily withSize:(CGFloat)size
+- (void)setBodyTextFont:(UIFont *)bodyTextFont
 {
-    self.bodyTextFontFamily = bodyTextFontFamily;
-    self.bodyFontSize = size;
-    self.viewText.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
+    self.viewText.font = bodyTextFont;
 }
 
-- (void)setButtonsTextFontFamily:(NSString *)buttonsFontFamily withSize:(CGFloat)size
+- (void)setButtonsTextFont:(UIFont *)buttonsFont
 {
-    self.buttonsFontFamily = buttonsFontFamily;
-    self.buttonsFontSize = size;
+    self.buttonsFont = buttonsFont;
 }
 
 #pragma mark - Background Color
@@ -577,7 +566,7 @@ SCLTimerDisplay *buttonTimer;
     
     // Add text field
     SCLTextView *txt = [[SCLTextView alloc] init];
-    txt.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
+    txt.font = _bodyTextFont;
     txt.delegate = self;
     
     // Update view height
@@ -675,7 +664,7 @@ SCLTimerDisplay *buttonTimer;
     SCLButton *btn = [[SCLButton alloc] initWithWindowWidth:self.windowWidth];
     btn.layer.masksToBounds = YES;
     [btn setTitle:title forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont fontWithName:_buttonsFontFamily size:_buttonsFontSize];
+    btn.titleLabel.font = _buttonsFont;
     
     [_contentView addSubview:btn];
     [_buttons addObject:btn];
@@ -910,7 +899,7 @@ SCLTimerDisplay *buttonTimer;
         if (_attributedFormatBlock == nil) {
             _viewText.text = subTitle;
         } else {
-            self.viewText.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
+            self.viewText.font = _bodyTextFont;
             _viewText.attributedText = self.attributedFormatBlock(subTitle);
         }
         
@@ -1858,16 +1847,16 @@ SCLTimerDisplay *buttonTimer;
         [weakSelf.alertView addTimerToButtonIndex:buttonIndex reverse:reverse];
         return weakSelf;
     };
-    self.setTitleFontFamily = ^(NSString *titleFontFamily, CGFloat size) {
-        [weakSelf.alertView setTitleFontFamily:titleFontFamily withSize:size];
+    self.setTitleFont = ^(UIFont *titleFont) {
+        [weakSelf.alertView setTitleFont:titleFont];
         return weakSelf;
     };
-    self.setBodyTextFontFamily = ^(NSString *bodyTextFontFamily, CGFloat size) {
-        [weakSelf.alertView setBodyTextFontFamily:bodyTextFontFamily withSize:size];
+    self.setBodyTextFont = ^(UIFont *bodyTextFont) {
+        [weakSelf.alertView setBodyTextFont:bodyTextFont];
         return weakSelf;
     };
-    self.setButtonsTextFontFamily = ^(NSString *buttonsFontFamily, CGFloat size) {
-        [weakSelf.alertView setButtonsTextFontFamily:buttonsFontFamily withSize:size];
+    self.setButtonsTextFont = ^(UIFont *buttonsFont) {
+        [weakSelf.alertView setButtonsTextFont:buttonsFont];
         return weakSelf;
     };
     self.addButtonWithActionBlock = ^(NSString *title, SCLActionBlock action) {
