@@ -308,7 +308,7 @@ SCLTimerDisplay *buttonTimer;
     CGRect r;
     if (self.view.superview != nil) {
         // View is showing, position at center of screen
-        r = CGRectMake((sz.width-_windowWidth)/2, (sz.height-_windowHeight)/2, _windowWidth, _windowHeight);
+        r = CGRectMake((sz.width-_windowWidth)/2, _windowY ? _windowY : (sz.height-_windowHeight)/2, _windowWidth, _windowHeight);
     } else {
         // View is not visible, position outside screen bounds
         r = CGRectMake((sz.width-_windowWidth)/2, -_windowHeight, _windowWidth, _windowHeight);
@@ -324,6 +324,7 @@ SCLTimerDisplay *buttonTimer;
     _contentView.frame = CGRectMake(0.0f, 0.0f, _windowWidth, _windowHeight);
     _circleViewBackground.frame = CGRectMake(_windowWidth / 2 - kCircleHeightBackground / 2, kCircleBackgroundTopPosition, kCircleHeightBackground, kCircleHeightBackground);
     _circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
+    _circleViewBackground.hidden = _circleViewHidden;
     _circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
     _circleIconImageView.frame = CGRectMake(kCircleHeight / 2 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2, _circleIconHeight, _circleIconHeight);
     _labelTitle.frame = CGRectMake(12.0f, kTitleTop, _windowWidth - 24.0f, _titleHeight);

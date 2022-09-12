@@ -230,6 +230,18 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 @property (nonatomic) BOOL horizontalButtons;
 
+/** Set circle view hidden.
+ *
+ * Circle view hidden
+ */
+@property (nonatomic) BOOL circleViewHidden;
+
+/** Set window y position.
+ *
+ * Window y position
+ */
+@property (nonatomic) CGFloat windowY;
+
 /** Initialize SCLAlertView using a new window.
  *
  * Init with new window
