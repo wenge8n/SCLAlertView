@@ -35,6 +35,7 @@
 @property (strong, nonatomic) UIView *circleView;
 @property (strong, nonatomic) UIView *circleViewBackground;
 @property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIView *separator;
 @property (strong, nonatomic) UIImageView *backgroundView;
 @property (strong, nonatomic) UITapGestureRecognizer *gestureRecognizer;
 @property (strong, nonatomic) NSString *titleFontFamily;
@@ -186,6 +187,7 @@ SCLTimerDisplay *buttonTimer;
     _viewText = [[UITextView alloc] init];
     _viewText.accessibilityTraits = UIAccessibilityTraitStaticText;
     _contentView = [[UIView alloc] init];
+    _separator = [[UIView alloc] init];
     _circleView = [[UIView alloc] init];
     _circleViewBackground = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kCircleHeightBackground, kCircleHeightBackground)];
     _circleIconImageView = [[UIImageView alloc] init];
@@ -243,12 +245,14 @@ SCLTimerDisplay *buttonTimer;
     _contentView.layer.borderWidth = 0.5f;
     [_contentView addSubview:_viewText];    
     [_contentView addSubview:_labelTitle];
+    [_contentView addSubview:_separator];
     
     // Colors
     self.backgroundViewColor = [UIColor whiteColor];
     _labelTitle.textColor = UIColorFromHEX(0x4D4D4D); //Dark Grey
     _viewText.textColor = UIColorFromHEX(0x4D4D4D); //Dark Grey
     _contentView.layer.borderColor = UIColorFromHEX(0xCCCCCC).CGColor; //Light Grey
+    _separator.backgroundColor = UIColorFromHEX(0xF2F2F2);
 }
 
 - (void)setupNewWindow {
@@ -350,6 +354,10 @@ SCLTimerDisplay *buttonTimer;
         view.frame = CGRectMake(12.0f, y, view.frame.size.width, view.frame.size.height);
         y += view.frame.size.height + 10.0f;
     }
+    
+    // Separator
+    _separator.frame = CGRectMake(0, y, _windowWidth, 1);
+    y += 1;
     
     // Buttons
     CGFloat x = 0.0f;
@@ -963,14 +971,7 @@ SCLTimerDisplay *buttonTimer;
     
     for (SCLButton *btn in _buttons)
     {
-        if (style == SCLAlertViewStyleWarning)
-        {
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        }
-        
-        if (!btn.defaultBackgroundColor) {
-            btn.defaultBackgroundColor = viewColor;
-        }
+        [btn setTitleColor:viewColor forState:UIControlStateNormal];
         
         if (btn.completeButtonFormatBlock != nil)
         {
