@@ -161,7 +161,7 @@ SCLTimerDisplay *buttonTimer;
     self.subTitleHeight = 90.0f;
     self.circleIconHeight = 20.0f;
     self.windowWidth = windowWidth;
-    self.windowHeight = 178.0f;
+    self.windowHeight = _titleHeight + _subTitleHeight + 18.0f + 20.0f + 1.0f;
     self.shouldDismissOnTapOutside = NO;
     self.usingNewWindow = NO;
     self.canAddObservers = YES;
@@ -329,7 +329,7 @@ SCLTimerDisplay *buttonTimer;
     
     // Text fields
     CGFloat y = (_labelTitle.text == nil) ? kTitleTop : _titleHeight;
-    y += 18;
+    y += 18.0f;
     _viewText.frame = CGRectMake(16.0f, y, _windowWidth - 32.0f, _subTitleHeight);
     
     if (!_labelTitle && !_viewText) {
@@ -677,7 +677,7 @@ SCLTimerDisplay *buttonTimer;
         
         // Update view height
         if (!([_buttons count] > 1)) {
-            self.windowHeight += (btn.frame.size.height + ADD_BUTTON_PADDING);
+            self.windowHeight += btn.frame.size.height;
         }
     } else {
         // Update view height
